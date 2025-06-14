@@ -1,0 +1,22 @@
+[2025-06-14, 00:00:02 UTC] {dagbag.py:511} INFO - Filling up the DagBag from /usr/local/airflow/dags/nasa_apod_etl_dag.py
+[2025-06-14, 00:00:05 UTC] {scheduler_job.py:1356} INFO - DAG <nasa_apod_etl_pipeline> is up-to-date. Scheduling new DAG Run.
+[2025-06-14, 00:00:06 UTC] {dagrun.py:589} INFO - Creating <DagRun nasa_apod_etl_pipeline @ 2025-06-14T00:00:00+00:00: scheduled__2025-06-14T00:00:00+00:00, externally triggered: False>
+[2025-06-14, 00:00:08 UTC] {taskinstance.py:1167} INFO - Executing <TaskInstance: extract_apod_data.nasa_apod_etl_pipeline scheduled__2025-06-14T00:00:00+00:00 [queued]> on 2025-06-14 00:00:00+00:00
+[2025-06-14, 00:00:09 UTC] {http.py:142} INFO - Calling HTTP method
+[2025-06-14, 00:00:09 UTC] {http.py:149} INFO - Request URL: https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY
+[2025-06-14, 00:00:09 UTC] {http.py:163} INFO - Status code: 200
+[2025-06-14, 00:00:09 UTC] {taskinstance.py:1285} INFO - Task extract_apod_data succeeded
+
+[2025-06-14, 00:00:11 UTC] {taskinstance.py:1167} INFO - Executing <TaskInstance: transform_apod_data.nasa_apod_etl_pipeline scheduled__2025-06-14T00:00:00+00:00 [queued]> on 2025-06-14 00:00:00+00:00
+[2025-06-14, 00:00:12 UTC] {python.py:160} INFO - Running @task transform_apod_data()
+[2025-06-14, 00:00:12 UTC] {python.py:165} INFO - Extracted fields: title, explanation, url, date
+[2025-06-14, 00:00:12 UTC] {python.py:166} INFO - Formatted date: 2025-06-14
+[2025-06-14, 00:00:12 UTC] {taskinstance.py:1285} INFO - Task transform_apod_data succeeded
+
+[2025-06-14, 00:00:14 UTC] {taskinstance.py:1167} INFO - Executing <TaskInstance: load_apod_data_to_postgres.nasa_apod_etl_pipeline scheduled__2025-06-14T00:00:00+00:00 [queued]> on 2025-06-14 00:00:00+00:00
+[2025-06-14, 00:00:14 UTC] {postgres.py:144} INFO - Establishing connection to Postgres...
+[2025-06-14, 00:00:15 UTC] {postgres.py:167} INFO - Target table 'apod_data' exists. Inserting row...
+[2025-06-14, 00:00:15 UTC] {postgres.py:171} INFO - Inserted 1 record into apod_data.
+[2025-06-14, 00:00:15 UTC] {taskinstance.py:1285} INFO - Task load_apod_data_to_postgres succeeded
+
+[2025-06-14, 00:00:17 UTC] {dagrun.py:615} INFO - DagRun <nasa_apod_etl_pipeline @ 2025-06-14T00:00:00+00:00> succeeded
